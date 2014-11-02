@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:shape="rectangle">
+
+    <gradient
+        android:startColor="#3f3f3f"
+        android:centerColor="#2f2f2f"
+        android:endColor="#1c1c1c"
+        android:angle="270" />
+</shape><!-- Copyright (c) 2014 YA<ya.androidapp@gmail.com> All rights reserved. -->

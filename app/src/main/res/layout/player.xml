@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4a4a4a"
+    tools:context=".MainActivity"
+    tools:deviceIds="wear">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true">
+
+            <!-- Player Header -->
+            <LinearLayout
+                android:id="@+id/player_header_bg"
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:layout_alignParentTop="true"
+                android:background="@layout/bg_player_header"
+                android:paddingLeft="5sp"
+                android:paddingRight="5sp">
+
+                <!-- Song Title -->
+                <TextView
+                    android:id="@+id/songTitle"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5sp"
+                    android:paddingEnd="5sp"
+                    android:paddingStart="5sp"
+                    android:text="@string/hello"
+                    android:textColor="#04b3d2"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Song Thumbnail Image -->
+            <LinearLayout
+                android:id="@+id/songThumbnail"
+                android:layout_width="192sp"
+                android:layout_height="192sp"
+                android:layout_below="@id/player_header_bg"
+                android:gravity="center"
+                android:paddingBottom="5sp"
+                android:paddingTop="5sp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/hello"
+                    android:src="@drawable/adele" />
+            </LinearLayout>
+
+            <!-- Player Footer -->
+            <LinearLayout
+                android:id="@+id/player_footer_bg"
+                android:layout_width="match_parent"
+                android:layout_height="80sp"
+                android:layout_alignParentBottom="true"
+                android:background="@layout/bg_player_footer"
+                android:gravity="center">
+
+                <!-- Player Buttons -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@layout/rounded_corner"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="5sp"
+                    android:paddingRight="5sp">
+                    <!-- Previous Button -->
+                    <ImageButton
+                        android:id="@+id/btnPrevious"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:contentDescription="@string/hello"
+                        android:src="@drawable/btn_previous" />
+                    <!-- Backward Button -->
+                    <ImageButton
+                        android:id="@+id/btnBackward"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:contentDescription="@string/hello"
+                        android:src="@drawable/btn_backward" />
+                    <!-- Play Button -->
+                    <ImageButton
+                        android:id="@+id/btnPlay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:contentDescription="@string/hello"
+                        android:src="@drawable/btn_play" />
+                    <!-- Forward Button -->
+                    <ImageButton
+                        android:id="@+id/btnForward"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:contentDescription="@string/hello"
+                        android:src="@drawable/btn_forward" />
+                    <!-- Next Button -->
+                    <ImageButton
+                        android:id="@+id/btnNext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:contentDescription="@string/hello"
+                        android:src="@drawable/btn_next" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Progress Bar/Seek bar -->
+            <SeekBar
+                android:id="@+id/songProgressBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/player_footer_bg"
+                android:layout_marginBottom="10sp"
+                android:layout_marginEnd="10sp"
+                android:layout_marginStart="10sp"
+                android:paddingLeft="6sp"
+                android:paddingRight="6sp"
+                android:progressDrawable="@drawable/seekbar_progress"
+                android:thumb="@drawable/seek_handler" />
+
+            <!-- Timer Display -->
+            <LinearLayout
+                android:id="@+id/timerDisplay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/songProgressBar"
+                android:layout_marginBottom="5sp"
+                android:layout_marginEnd="20sp"
+                android:layout_marginStart="20sp">
+                <!-- Current Duration Label -->
+                <TextView
+                    android:id="@+id/songCurrentDurationLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:textColor="#eeeeee"
+                    android:textStyle="bold" />
+                <!-- Total Duration Label -->
+                <TextView
+                    android:id="@+id/songTotalDurationLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:textColor="#04cbde"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Repeat / Shuffle buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/timerDisplay"
+                android:gravity="center">
+                <!-- Repeat Button -->
+                <ImageButton
+                    android:id="@+id/btnRepeat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5sp"
+                    android:layout_marginEnd="5sp"
+                    android:background="@null"
+                    android:contentDescription="@string/hello"
+                    android:src="@drawable/btn_repeat" />
+
+                <!-- Shuffle Button -->
+                <ImageButton
+                    android:id="@+id/btnShuffle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5sp"
+                    android:layout_marginEnd="5sp"
+                    android:background="@null"
+                    android:contentDescription="@string/hello"
+                    android:src="@drawable/btn_shuffle" />
+
+                <!-- Playlist button -->
+                <ImageButton
+                    android:id="@+id/btnPlaylist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:layout_marginStart="5sp"
+                    android:layout_marginEnd="5sp"
+                    android:contentDescription="@string/hello"
+                    android:src="@drawable/btn_playlist" />
+
+                <!-- About button -->
+                <ImageButton
+                    android:id="@+id/about"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:layout_marginStart="5sp"
+                    android:layout_marginEnd="5sp"
+                    android:contentDescription="@string/about"
+                    android:src="@android:drawable/ic_dialog_info" />
+            </LinearLayout>
+        </RelativeLayout>
+</RelativeLayout><!-- Copyright (c) 2014 YA<ya.androidapp@gmail.com> All rights reserved. -->
