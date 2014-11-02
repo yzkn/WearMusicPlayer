@@ -11,7 +11,7 @@ This is the app that make it possible to listen to music on Android Wear devices
 ## Install
 ---
 
-### Please download app-release.apk from here.
+### Please download app-release.apk from [here](https://github.com/YA-androidapp/WearMusicPlayer/blob/master/app/app-release.apk?raw=true).
 
 ### Please install it.
 
