@@ -1,6 +1,8 @@
 package jp.gr.java_conf.ya.wearmusicplayer; //  Copyright (c) 2014 YA<ya.androidapp@gmail.com> All rights reserved.
 
+import android.media.MediaMetadataRetriever;
 import android.os.Environment;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.File;
@@ -11,6 +13,8 @@ import java.util.Locale;
 
 public class SongsManager {
     final String MEDIA_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Music/";
+    private final String mSongPath = "songPath";
+    private final String mSongTitle = "songTitle";
     private ArrayList<HashMap<String, String>> songsList = new ArrayList<HashMap<String, String>>();
 
     public SongsManager() {}
@@ -21,6 +25,7 @@ public class SongsManager {
             getPlayList(home);
             return songsList;
         } catch (Exception e) {
+            Log.d("",e.getLocalizedMessage());
         }
         return new ArrayList<HashMap<String, String>>();
     }
@@ -42,16 +47,18 @@ public class SongsManager {
                 }
             }
         } catch (Exception e) {
+            Log.d("",e.getLocalizedMessage());
         }
     }
 
     private void addSong(File file) {
         try {
             HashMap<String, String> song = new HashMap<String, String>();
-            song.put("songTitle", file.getName().substring(0, (file.getName().lastIndexOf("."))));
-            song.put("songPath", file.getPath());
+            song.put(mSongTitle, file.getName().substring(0, (file.getName().lastIndexOf("."))));
+            song.put(mSongPath, file.getPath());
             songsList.add(song);
         } catch (Exception e) {
+            Log.d("",e.getLocalizedMessage());
         }
     }
 
@@ -79,6 +86,7 @@ public class SongsManager {
                     return true;
                 }
             } catch (Exception e) {
+                Log.d("",e.getLocalizedMessage());
             }
             return false;
         }

@@ -8,14 +8,13 @@
     <ListView
         android:id="@android:id/list"
         app:layout_box="all"
-        android:layout_marginStart="25sp"
+        android:layout_marginStart="15sp"
         android:layout_marginEnd="0sp"
-        android:layout_marginTop="20sp"
+        android:layout_marginTop="15sp"
         android:layout_marginBottom="10sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:divider="#242424"
-        android:dividerHeight="1dp"
-        android:listSelector="@drawable/list_selector" />
+        android:dividerHeight="1dp" />
 
 </RelativeLayout><!-- Copyright (c) 2014 YA<ya.androidapp@gmail.com> All rights reserved. -->

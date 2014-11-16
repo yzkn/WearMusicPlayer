@@ -16,6 +16,9 @@ import java.util.HashMap;
 
 public class PlayListActivity extends ListActivity {
     public ArrayList<HashMap<String, String>> songsList = new ArrayList<HashMap<String, String>>();
+    private final int REQUEST_PLAYLIST = 100;
+    private final String mSongIndex = "songIndex";
+    private final String mSongTitle = "songTitle";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,7 +35,7 @@ public class PlayListActivity extends ListActivity {
         }
 
         ListAdapter adapter = new SimpleAdapter(this, songsListData,
-                R.layout.playlist_item, new String[]{"songTitle"}, new int[]{
+                R.layout.playlist_item, new String[]{mSongTitle}, new int[]{
                 R.id.songTitle});
         setListAdapter(adapter);
 
@@ -45,11 +48,11 @@ public class PlayListActivity extends ListActivity {
                 try {
                     Intent in = new Intent(getApplicationContext(),
                             MainActivity.class);
-                    in.putExtra("songIndex", position);
-                    setResult(100, in);
+                    in.putExtra(mSongIndex, position);
+                    setResult(REQUEST_PLAYLIST, in);
                     finish();
                 } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), "Exception: " + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });

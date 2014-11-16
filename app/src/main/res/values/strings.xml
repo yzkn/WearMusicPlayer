@@ -4,8 +4,8 @@
     <string name="about">About</string>
     <string name="app_name">WearMusicPlayer</string>
     <string name="copyright">Copyright &#169; 2014 YA&lt;ya.androidapp@gmail.com&gt; All rights reserved.</string>
-    <string name="hello"></string>
-    <string name="hello_round"></string>
-    <string name="hello_square"></string>
+    <string name="empty"></string>
+    <string name="exception">Exception:</string>
+    <string name="songlist_null">songsList is NULL</string>
 
 </resources><!-- Copyright (c) 2014 YA<ya.androidapp@gmail.com> All rights reserved. -->
