@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -70,9 +72,9 @@ public class MainActivity extends Activity implements MediaPlayer.OnCompletionLi
                 } else if (ke.getKeyCode() == KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE) {
                     playpause();
                 } else if (ke.getKeyCode() == KeyEvent.KEYCODE_MEDIA_PLAY) {
-                    playpause();
+                    play();
                 } else if (ke.getKeyCode() == KeyEvent.KEYCODE_MEDIA_PAUSE) {
-                    playpause();
+                    pause();
                 } else if (ke.getKeyCode() == KeyEvent.KEYCODE_MEDIA_STOP) {
                     stop();
                 } else if (ke.getKeyCode() == KeyEvent.KEYCODE_MEDIA_NEXT) {
@@ -86,7 +88,9 @@ public class MainActivity extends Activity implements MediaPlayer.OnCompletionLi
                 }
             }
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            // Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+        } catch (Error e) {
+            // Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
         }
         return super.dispatchKeyEvent(ke);
     }
@@ -147,7 +151,7 @@ public class MainActivity extends Activity implements MediaPlayer.OnCompletionLi
                     }
                 }
             } catch (Exception e) {
-                Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -223,7 +227,11 @@ public class MainActivity extends Activity implements MediaPlayer.OnCompletionLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        try {
+            am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        } catch (Exception e) {
+            // Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+        }
 
         setContentView(R.layout.player);
         btnPlay = (ImageButton) findViewById(R.id.btnPlay);
@@ -359,7 +367,7 @@ public class MainActivity extends Activity implements MediaPlayer.OnCompletionLi
                         btnShuffle.setImageResource(R.drawable.btn_shuffle);
                     }
                 } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -385,7 +393,7 @@ public class MainActivity extends Activity implements MediaPlayer.OnCompletionLi
                         btnRepeat.setImageResource(R.drawable.btn_repeat);
                     }
                 } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -408,7 +416,7 @@ public class MainActivity extends Activity implements MediaPlayer.OnCompletionLi
         try {
             mp.release();
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            // Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -427,7 +435,7 @@ public class MainActivity extends Activity implements MediaPlayer.OnCompletionLi
         try {
             mHandler.removeCallbacks(mUpdateTimeTask);
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            // Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -447,7 +455,7 @@ public class MainActivity extends Activity implements MediaPlayer.OnCompletionLi
             // update timer progress again
             updateProgressBar();
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            // Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -460,10 +468,13 @@ public class MainActivity extends Activity implements MediaPlayer.OnCompletionLi
         if (!(songsList == null)) {
             try {
                 if (songsList.size() > 0) {
-                    mp.reset();
-                    mp.setDataSource(songsList.get(songIndex).get(mSongPath));
-                    mp.prepare();
-                    mp.start();
+                    try {
+                        mp.reset();
+                        mp.setDataSource(songsList.get(songIndex).get(mSongPath));
+                        mp.prepare();
+                        mp.start();
+                    } catch (Exception e) {
+                    }
 
                     try {
                         MediaMetadataRetriever mmr = new MediaMetadataRetriever();
@@ -477,28 +488,30 @@ public class MainActivity extends Activity implements MediaPlayer.OnCompletionLi
                             byte[] data = mmr.getEmbeddedPicture();
                             imageView.setImageBitmap(BitmapFactory.decodeByteArray(data, 0, data.length));
                         } catch (Exception e) {
-                            Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                         }
                     } catch (Exception e) {
-                        Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-
-                        // Displaying Song title
                         String songTitle = songsList.get(songIndex).get(mSongTitle);
                         songTitleLabel.setText(songTitle);
                     }
 
-                    // Changing Button Image to pause image
-                    btnPlay.setImageResource(android.R.drawable.ic_media_pause);
+                    try {
+                        // Changing Button Image to pause image
+                        btnPlay.setImageResource(android.R.drawable.ic_media_pause);
+                    } catch (Exception e) {
+                    }
 
-                    // set Progress bar values
-                    songProgressBar.setProgress(0);
-                    songProgressBar.setMax(100);
+                    try {
+                        // set Progress bar values
+                        songProgressBar.setProgress(0);
+                        songProgressBar.setMax(100);
 
-                    // Updating progress bar
-                    updateProgressBar();
+                        // Updating progress bar
+                        updateProgressBar();
+                    } catch (Exception e) {
+                    }
                 }
             } catch (Exception e) {
-                Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -520,7 +533,7 @@ public class MainActivity extends Activity implements MediaPlayer.OnCompletionLi
                     mp.seekTo(0);
                 }
             } catch (Exception e) {
-                Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -538,7 +551,7 @@ public class MainActivity extends Activity implements MediaPlayer.OnCompletionLi
                     mp.seekTo(mp.getDuration());
                 }
             } catch (Exception e) {
-                Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -547,18 +560,52 @@ public class MainActivity extends Activity implements MediaPlayer.OnCompletionLi
         if (!(songsList == null)) {
             try {
                 if (songsList.size() > 0) {
-                    // check if next song is there or not
-                    if (currentSongIndex < (songsList.size() - 1)) {
-                        playSong(currentSongIndex + 1);
-                        currentSongIndex = currentSongIndex + 1;
-                    } else {
-                        // play first song
-                        playSong(0);
-                        currentSongIndex = 0;
+                    try {
+                        // check if next song is there or not
+                        if (currentSongIndex < (songsList.size() - 1)) {
+                            try {
+                                playSong(currentSongIndex + 1);
+                                currentSongIndex = currentSongIndex + 1;
+                            } catch (Exception e) {
+                            }
+                        } else {
+                            // play first song
+                            playSong(0);
+                            currentSongIndex = 0;
+                        }
+                    } catch (Exception e) {
                     }
                 }
             } catch (Exception e) {
-                Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getApplicationContext(), getString(R.string.exception) + " [1] " + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void play() {
+        if (mp != null) {
+            try {
+                if (!mp.isPlaying()) {
+                    mp.start();
+                    // Changing button image to pause button
+                    btnPlay.setImageResource(android.R.drawable.ic_media_pause);
+                }
+            } catch (Exception e) {
+                // Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void pause() {
+        if (mp != null) {
+            try {
+                if (mp.isPlaying()) {
+                    mp.pause();
+                    // Changing button image to play button
+                    btnPlay.setImageResource(android.R.drawable.ic_media_play);
+                }
+            } catch (Exception e) {
+                // Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -576,7 +623,7 @@ public class MainActivity extends Activity implements MediaPlayer.OnCompletionLi
                     btnPlay.setImageResource(android.R.drawable.ic_media_pause);
                 }
             } catch (Exception e) {
-                Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -595,7 +642,7 @@ public class MainActivity extends Activity implements MediaPlayer.OnCompletionLi
                     }
                 }
             } catch (Exception e) {
-                Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -610,7 +657,7 @@ public class MainActivity extends Activity implements MediaPlayer.OnCompletionLi
                         }
                     }).create().show();
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            // Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -619,7 +666,7 @@ public class MainActivity extends Activity implements MediaPlayer.OnCompletionLi
             Intent i = new Intent(getApplicationContext(), PlayListActivity.class);
             startActivityForResult(i, REQUEST_PLAYLIST);
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            // Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -631,7 +678,7 @@ public class MainActivity extends Activity implements MediaPlayer.OnCompletionLi
                 }
                 mp.seekTo(0);
             } catch (Exception e) {
-                Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getApplicationContext(), getString(R.string.exception) + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         }
     }
